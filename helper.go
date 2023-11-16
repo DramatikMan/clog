@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func HTTPResponse(req *http.Request, code int) string {
+func HTTPResponse(req *http.Request, code int, additional ...string) string {
 	responseStatus := fmt.Sprintf("%d %s", code, http.StatusText(code))
 	category := code / 100
 
@@ -22,8 +22,14 @@ func HTTPResponse(req *http.Request, code int) string {
 		responseStatus = fmt.Sprintf("\033[91m%s\033[0m", responseStatus)
 	}
 
-	return fmt.Sprintf(
+	out := fmt.Sprintf(
 		"%s - \033[1m\"%s %s\"\033[0m %s",
 		req.RemoteAddr, req.Method, req.URL.Path, responseStatus,
 	)
+
+	for _, text := range additional {
+		out = fmt.Sprintf("%s %s", out, text)
+	}
+
+	return out
 }

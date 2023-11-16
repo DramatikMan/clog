@@ -1,6 +1,6 @@
 module project/tools
 
-go 1.21.3
+go 1.21.4
 
 require (
 	github.com/cweill/gotests v1.6.0
